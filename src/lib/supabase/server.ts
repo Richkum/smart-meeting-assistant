@@ -1,9 +1,10 @@
 import { createClient } from "@supabase/supabase-js";
-import type { Database } from "@/lib/database.types";
+import type { Database } from "../../../lib/database.types";
 
 // Initialize the Supabase client for server-side operations
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabaseUrl = "https://sbqbapsyxquugsztzhtr.supabase.co";
+const supabaseServiceKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNicWJhcHN5eHF1dWdzenR6aHRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0MDc3MjgsImV4cCI6MjA1NTk4MzcyOH0.3B0NIomcn03dm6bybRug6mDk2W0HEYnnK17B9gEi1y4";
 
 if (!supabaseUrl || !supabaseServiceKey) {
   throw new Error("Missing Supabase environment variables");
