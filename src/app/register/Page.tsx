@@ -1,5 +1,16 @@
 import { AuthForm } from "@/components/auth/auth-form";
 
+/**
+ * The register page component.
+ *
+ * This component renders the register page, which includes
+ * a form for the user to enter their email address to
+ * create an account.
+ *
+ * The component uses the `AuthForm` component to render
+ * the form, and the `view` prop is set to `"sign-up"` to
+ * indicate that the form should be used for signing up.
+ */
 export default function RegisterPage() {
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
@@ -12,6 +23,7 @@ export default function RegisterPage() {
             Enter your email below to create your account
           </p>
         </div>
+        {/* The sign up form */}
         <AuthForm view="sign-up" />
       </div>
     </div>

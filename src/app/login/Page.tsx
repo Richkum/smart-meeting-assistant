@@ -1,5 +1,16 @@
 import { AuthForm } from "@/components/auth/auth-form";
 
+/**
+ * The login page component.
+ *
+ * This component renders the login page, which includes
+ * a sign in form for the user to enter their email and
+ * password.
+ *
+ * The component uses the `AuthForm` component to render
+ * the form, and the `view` prop is set to `"sign-in"` to
+ * indicate that the form should be used for signing in.
+ */
 export default function LoginPage() {
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
@@ -12,6 +23,7 @@ export default function LoginPage() {
             Enter your email to sign in to your account
           </p>
         </div>
+        {/* The sign in form */}
         <AuthForm view="sign-in" />
       </div>
     </div>
