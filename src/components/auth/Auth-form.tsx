@@ -19,21 +19,32 @@ export function AuthForm({ view }: AuthFormProps) {
   const [password, setPassword] = useState("");
   const supabase = createClient();
 
+  /**
+   * Handles the form submission, and signs the user in or up.
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
       if (view === "sign-in") {
+        // Sign the user in
         const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
         if (error) throw error;
       } else {
+        // Sign the user up
         const { error } = await supabase.auth.signUp({
           email,
           password,
+          /**
+           * After the user signs up, we redirect them to the callback page,
+           * where we handle the redirect to the protected route.
+           * This is because the sign up method does not support redirecting
+           * the user to the specified URL.
+           */
           options: {
             emailRedirectTo: `${location.origin}/auth/callback`,
           },
@@ -66,7 +77,7 @@ export function AuthForm({ view }: AuthFormProps) {
             />
           </div>
           <div className="grid gap-1">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Password </Label>
             <Input
               id="password"
               placeholder="••••••••"
