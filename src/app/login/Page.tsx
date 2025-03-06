@@ -1,4 +1,7 @@
 import { AuthForm } from "@/components/auth/auth-form";
+import { motion } from "framer-motion";
+import { FaSignInAlt } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
 
 /**
  * The login page component.
