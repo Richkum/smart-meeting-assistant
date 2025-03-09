@@ -6,3 +6,5 @@ export const Icons = {
   settings: Settings,
   logout: LogOut,
 };
+
+export default Icons;

@@ -59,11 +59,13 @@ export function AuthForm({ view }: AuthFormProps) {
   };
 
   return (
-    <div className="grid gap-6">
-      <form onSubmit={handleSubmit}>
-        <div className="grid gap-4">
-          <div className="grid gap-1">
-            <Label htmlFor="email">Email</Label>
+    <div className="max-w-md w-full mx-auto p-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email" className="text-sm font-medium">
+              Email
+            </Label>
             <Input
               id="email"
               placeholder="name@example.com"
@@ -74,10 +76,13 @@ export function AuthForm({ view }: AuthFormProps) {
               disabled={isLoading}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
             />
           </div>
-          <div className="grid gap-1">
-            <Label htmlFor="password">Password </Label>
+          <div className="space-y-2">
+            <Label htmlFor="password" className="text-sm font-medium">
+              Password
+            </Label>
             <Input
               id="password"
               placeholder="••••••••"
@@ -86,9 +91,13 @@ export function AuthForm({ view }: AuthFormProps) {
               disabled={isLoading}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
             />
           </div>
-          <Button disabled={isLoading}>
+          <Button
+            disabled={isLoading}
+            className="w-full py-2 font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
