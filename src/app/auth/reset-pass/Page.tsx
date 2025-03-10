@@ -4,7 +4,14 @@ import { FaSignInAlt } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { FaLock } from "react-icons/fa";
 
-export default function ResetPassPage() {
+/**
+ * The reset password page component.
+ *
+ * This component renders the reset password page, which includes
+ * a form for the user to enter their email address to reset
+ * their password.
+ */
+export default function ResetPasswordPage() {
   return (
     <div className="relative flex h-screen w-screen items-center justify-center bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500">
       {/* Background overlay for glass effect */}
@@ -24,7 +31,9 @@ export default function ResetPassPage() {
             Reset Password
           </h1>
         </div>
-        <AuthForm view="reset-pass" />
+
+        {/* Reset Password Form */}
+        <AuthForm view="reset-password" />
       </motion.div>
     </div>
   );
