@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { FaSignInAlt } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { FaLock } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 /**
  * The reset password page component.
@@ -31,6 +32,12 @@ export default function ResetPasswordPage() {
             Reset Password
           </h1>
         </div>
+        <Link>
+          <Button variant="outline" className="w-full">
+            <FaLock className="mr-2" />
+            back to login
+          </Button>
+        </Link>
 
         {/* Reset Password Form */}
         <AuthForm view="reset-password" />
