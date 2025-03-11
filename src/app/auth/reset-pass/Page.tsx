@@ -31,16 +31,45 @@ export default function ResetPasswordPage() {
           <h1 className="text-3xl font-bold text-white tracking-tight">
             Reset Password
           </h1>
+          <p className="text-sm text-white/80">
+            Enter your email address below and we'll send you an email with
+            instructions to reset your password.
+          </p>
         </div>
-        <Link>
-          <Button variant="outline" className="w-full">
-            <FaLock className="mr-2" />
-            back to login
-          </Button>
-        </Link>
 
         {/* Reset Password Form */}
-        <AuthForm view="reset-password" />
+        <AuthForm view="reset-password">
+          <label htmlFor="email" className="sr-only">
+            Email address
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your email address"
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            required
+          />
+
+          <Button
+            type="submit"
+            className="mt-4 w-full bg-white/20 flex items-center justify-center border border-transparent text-sm font-semibold text-white hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            <FaLock className="mr-2" />
+            Reset Password
+          </Button>
+        </AuthForm>
+
+        {/* Back to login link */}
+        <Link to="/login">
+          <Button
+            variant="outline"
+            className="w-full mt-4 flex items-center justify-center border border-transparent text-sm font-semibold text-white hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            <FaSignInAlt className="mr-2" />
+            Back to login
+          </Button>
+        </Link>
       </motion.div>
     </div>
   );
