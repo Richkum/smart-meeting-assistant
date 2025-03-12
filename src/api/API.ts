@@ -43,15 +43,25 @@ export const API = {
 
     return response.json();
   },
+  /**
+   * Fetches the user information for a specified instance.
+   *
+   * @param instance - The instance name to fetch the user from. Defaults to "default".
+   * @returns The user information as a JSON object.
+   * @throws An error if the request fails.
+   */
   getUser: async (instance = "default") => {
+    // Construct the URL to fetch the user information from
     const response = await fetch(`${BASEURL}/${instance}/auth/user`, {
       method: "GET",
     });
 
+    // Check if the response is not OK, and throw an error if so
     if (!response.ok) {
       throw new Error(`Failed to get user for instance ${instance}`);
     }
 
+    // Return the user information as JSON
     return response.json();
   },
 
