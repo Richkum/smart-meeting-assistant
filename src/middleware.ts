@@ -18,30 +18,37 @@ import type { NextRequest } from "next/server";
  * @returns The response from the middleware function.
  */
 export async function middleware(req: NextRequest) {
-  // Get the response object from Next.js
-  const res = NextResponse.next();
+  try {
+    // Get the response object from Next.js
+    const res = NextResponse.next();
 
-  // Create the Supabase client instance
-  const supabase = createMiddlewareClient({ req, res });
+    // Create the Supabase client instance
+    const supabase = createMiddlewareClient({ req, res });
 
-  // Get the session from the Supabase client instance
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    // Get the session from the Supabase client instance
+    const sessionResponse = await supabase.auth.getSession();
+    const session = sessionResponse?.data?.session;
 
-  // Protect routes that require authentication
-  if (!session && req.nextUrl.pathname.startsWith("/dashboard")) {
-    // Create a new URL object with the same properties as the
-    // current URL object, but with a different pathname
-    const redirectUrl = req.nextUrl.clone();
-    redirectUrl.pathname = "/login";
+    // Protect routes that require authentication
+    if (!session && req.nextUrl.pathname.startsWith("/dashboard")) {
+      // Create a new URL object with the same properties as the
+      // current URL object, but with a different pathname
+      const redirectUrl = req.nextUrl.clone();
+      redirectUrl.pathname = "/login";
 
-    // Redirect the user to the login page
-    return NextResponse.redirect(redirectUrl);
+      // Redirect the user to the login page
+      return NextResponse.redirect(redirectUrl);
+    }
+
+    // Return the response from the middleware function
+    return res;
+  } catch (error) {
+    console.error("Middleware error:", error);
+    // In case of an error, redirect to an error page or handle it accordingly
+    const errorRedirectUrl = req.nextUrl.clone();
+    errorRedirectUrl.pathname = "/error";
+    return NextResponse.redirect(errorRedirectUrl);
   }
-
-  // Return the response from the middleware function
-  return res;
 }
 
 export const config = {
