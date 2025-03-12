@@ -11,7 +11,8 @@ export const API = {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to register");
+      const errorResponse = await response.json();
+      throw new Error(errorResponse.message);
     }
 
     return response.json();
@@ -42,13 +43,13 @@ export const API = {
 
     return response.json();
   },
-  getUser: async () => {
-    const response = await fetch(`${BASEURL}/auth/user`, {
+  getUser: async (instance = "default") => {
+    const response = await fetch(`${BASEURL}/${instance}/auth/user`, {
       method: "GET",
     });
 
     if (!response.ok) {
-      throw new Error("Failed to get user");
+      throw new Error(`Failed to get user for instance ${instance}`);
     }
 
     return response.json();
