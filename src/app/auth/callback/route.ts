@@ -11,18 +11,27 @@ import { NextResponse } from "next/server";
  * with an authorization session cookie.
  */
 export async function GET(request: Request) {
-  // Get the authorization code from the query string
-  const requestUrl = new URL(request.url);
-  const code = requestUrl.searchParams.get("code");
+  try {
+    // Get the authorization code from the query string
+    const requestUrl = new URL(request.url);
+    const code = requestUrl.searchParams.get("code");
 
-  // If the code is present, exchange it for a session cookie
-  if (code) {
+    // Check if code is present and not null
+    if (!code) {
+      throw new Error("Authorization code not found in the request");
+    }
+
     // Create the Supabase client instance
     const supabase = createRouteHandlerClient({ cookies });
-    // Exchange the authorization code for a session cookie
-    await supabase.auth.exchangeCodeForSession(code);
-  }
 
-  // Redirect the user to the dashboard page
-  return NextResponse.redirect(new URL("/dashboard", request.url));
+    // Attempt to exchange the authorization code for a session cookie
+    await supabase.auth.exchangeCodeForSession(code);
+
+    // Redirect the user to the dashboard page
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  } catch (error) {
+    console.error("Error handling the callback route:", error);
+    // Handle errors such as logging and redirecting to an error page if necessary
+    return NextResponse.redirect(new URL("/error", request.url));
+  }
 }
