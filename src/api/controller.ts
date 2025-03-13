@@ -28,3 +28,27 @@ const createMeeting = async (req: Request, res: Response) => {
   }
 };
 //    * Gets the user's profile by sending a GET request to the /auth/me endpoint.
+
+const getProfile = async (req: Request, res: Response) => {
+  try {
+    // Get the user from the request object
+    const user = req.user;
+
+    // Return the user as a JSON object
+    res.json(user);
+  } catch (error) {
+    // Log the error to the console
+    console.error("Error getting the profile:", error);
+
+    // Return an error response
+    res.status(500).json({ error: "Failed to get the profile" });
+  }
+};
+
+const convertTime = (time: string) => {
+  // Convert the time to a Date object
+  const date = new Date(time);
+
+  // Return the time as a string
+  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+};
