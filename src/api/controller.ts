@@ -29,7 +29,7 @@ const createMeeting = async (req: Request, res: Response) => {
 };
 //    * Gets the user's profile by sending a GET request to the /auth/me endpoint.
 
-const getProfile = async (req: Request, res: Response) => {
+export const getProfile = async (req: Request, res: Response) => {
   try {
     // Get the user from the request object
     const user = req.user;
@@ -45,7 +45,7 @@ const getProfile = async (req: Request, res: Response) => {
   }
 };
 
-const convertTime = (time: string) => {
+export const convertTime = (time: string) => {
   // Convert the time to a Date object
   const date = new Date(time);
 

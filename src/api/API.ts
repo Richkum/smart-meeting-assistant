@@ -119,4 +119,13 @@ export const API = {
       throw error;
     }
   },
+
+  /**
+   * Updates the user's password with the provided token and new password.
+   *
+   * @param token - The token received from the reset password email.
+   * @param password - The new password to update the user's password with.
+   * @returns The response of the request as a JSON object.
+   * @throws An error if the token or password is not provided, or the request fails.
+   */
 };
