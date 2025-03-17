@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
+import { PrismaClient } from "@prisma/client";
 
-const createMeeting = async (req: Request, res: Response) => {
+const prisma = new PrismaClient();
+
+export const createMeeting = async (req: Request, res: Response) => {
   try {
     // Get the request body
     const { title, description, date, startTime, endTime, location } = req.body;
