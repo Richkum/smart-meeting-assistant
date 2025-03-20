@@ -28,3 +28,26 @@ export const register = async (email: string, password: string) => {
 
   return response.json();
 };
+
+export const login = async (email: string, password: string) => {
+  if (!email) {
+    throw new Error("Email is required");
+  } else if (!password) {
+    throw new Error("Password is required");
+  }
+
+  const response = await fetch(`${BASEURL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (response.status === 400) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+
+  return response.json();
+};
