@@ -116,3 +116,20 @@ export const closeMeeting = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+const pauseMeeting = async (req: Request, res: Response) => {
+  try {
+    const meeting = await prisma.meeting.update({
+      where: {
+        id: req.params.id,
+      },
+      data: {
+        paused: true,
+      },
+    });
+    res.status(200).json(meeting);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
