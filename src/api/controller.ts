@@ -3,55 +3,57 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const createMeeting = async (req: Request, res: Response) => {
-  try {
-    // Get the request body
-    const { title, description, date, startTime, endTime, location } = req.body;
+export const startMeeting = async (req: Request, res: Response) => {
+  const { title, description, startDate, endDate, startTime, endTime } =
+    req.body;
 
-    // Create the meeting in the database
+  if (
+    !title ||
+    !description ||
+    !startDate ||
+    !endDate ||
+    !startTime ||
+    !endTime
+  ) {
+    return res
+      .status(400)
+      .json({ error: "Bad request. Please provide all required fields" });
+  }
+
+  const existingMeeting = await prisma.meeting.findFirst({
+    where: {
+      OR: [
+        {
+          title,
+        },
+        {
+          description,
+        },
+        {
+          startDate,
+          endDate,
+        },
+        {
+          startTime,
+          endTime,
+        },
+      ],
+    },
+  });
+
+  if (existingMeeting) {
+    return res.status(409).json({ error: "Meeting already exists" });
+  }
+
+  try {
     const meeting = await prisma.meeting.create({
       data: {
-        title,
-        description,
-        date,
-        startTime,
-        endTime,
-        location,
+        ...req.body,
       },
     });
-
-    // Return the meeting as a JSON object
-    res.json(meeting);
+    res.status(200).json(meeting);
   } catch (error) {
-    // Log the error to the console
-    console.error("Error creating the meeting:", error);
-
-    // Return an error response
-    res.status(500).json({ error: "Failed to create the meeting" });
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
   }
-};
-//    * Gets the user's profile by sending a GET request to the /auth/me endpoint.
-
-export const getProfile = async (req: Request, res: Response) => {
-  try {
-    // Get the user from the request object
-    const user = req.user;
-
-    // Return the user as a JSON object
-    res.json(user);
-  } catch (error) {
-    // Log the error to the console
-    console.error("Error getting the profile:", error);
-
-    // Return an error response
-    res.status(500).json({ error: "Failed to get the profile" });
-  }
-};
-
-export const convertTime = (time: string) => {
-  // Convert the time to a Date object
-  const date = new Date(time);
-
-  // Return the time as a string
-  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 };
