@@ -85,3 +85,26 @@ export const logout = async () => {
     }
   }
 };
+
+export const forgotPassword = async (email: string) => {
+  if (!email) {
+    throw new Error("Email is required");
+  } else if (!email.includes("@")) {
+    throw new Error("Invalid email format");
+  }
+
+  const response = await fetch(`${BASEURL}/auth/forgot-password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  if (response.status === 400) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+
+  return response.json();
+};
