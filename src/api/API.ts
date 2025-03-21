@@ -51,3 +51,37 @@ export const login = async (email: string, password: string) => {
 
   return response.json();
 };
+
+export const logout = async () => {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
+
+    const response = await fetch(`${BASEURL}/auth/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Failed to logout");
+    }
+
+    return response.json();
+  } catch (error) {
+    if (error.name === "AbortError") {
+      throw new Error(
+        "Request timed out. Please check your internet connection."
+      );
+    } else if (error.message === "Failed to fetch") {
+      throw new Error("Network error. Please check your internet connection.");
+    } else {
+      throw error;
+    }
+  }
+};
