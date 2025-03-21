@@ -126,12 +126,17 @@ export const logout = async () => {
 };
 
 export const forgotPassword = async (email: string) => {
+  // Check if the email is empty
   if (!email) {
     throw new Error("Email is required");
-  } else if (!email.includes("@")) {
+  }
+
+  // Check if the email is in the correct format
+  else if (!email.includes("@")) {
     throw new Error("Invalid email format");
   }
 
+  // Send a POST request to the API to send a password reset email
   const response = await fetch(`${BASEURL}/auth/forgot-password`, {
     method: "POST",
     headers: {
@@ -140,25 +145,32 @@ export const forgotPassword = async (email: string) => {
     body: JSON.stringify({ email }),
   });
 
+  // If the response is a 400, throw an error
   if (response.status === 400) {
     const error = await response.json();
     throw new Error(error.message);
   }
 
+  // Return the response from the API
   return response.json();
 };
 
 export const resetPassword = async (token: string, newPassword: string) => {
+  // Check if the token is empty
   if (!token) {
     throw new Error("Token is required");
   }
 
+  // Check if the new password is empty
   if (!newPassword) {
     throw new Error("New password is required");
-  } else if (newPassword.length < 8) {
+  }
+  // Check if the new password is at least 8 characters
+  else if (newPassword.length < 8) {
     throw new Error("Password must be at least 8 characters");
   }
 
+  // Send a POST request to the API to reset the user's password
   const response = await fetch(`${BASEURL}/auth/reset-password`, {
     method: "POST",
     headers: {
@@ -167,11 +179,13 @@ export const resetPassword = async (token: string, newPassword: string) => {
     body: JSON.stringify({ token, newPassword }),
   });
 
+  // If the response is a 400, throw an error
   if (response.status === 400) {
     const error = await response.json();
     throw new Error(error.message);
   }
 
+  // Return the response from the API
   return response.json();
 };
 
@@ -179,16 +193,21 @@ export const changePassword = async (
   oldPassword: string,
   newPassword: string
 ) => {
+  // Check if the old password is empty
   if (!oldPassword) {
     throw new Error("Old password is required");
   }
 
+  // Check if the new password is empty
   if (!newPassword) {
     throw new Error("New password is required");
-  } else if (newPassword.length < 8) {
+  }
+  // Check if the new password is at least 8 characters
+  else if (newPassword.length < 8) {
     throw new Error("Password must be at least 8 characters");
   }
 
+  // Send a POST request to the API to change the user's password
   const response = await fetch(`${BASEURL}/auth/change-password`, {
     method: "POST",
     headers: {
@@ -197,10 +216,12 @@ export const changePassword = async (
     body: JSON.stringify({ oldPassword, newPassword }),
   });
 
+  // If the response is a 400, throw an error
   if (response.status === 400) {
     const error = await response.json();
     throw new Error(error.message);
   }
 
+  // Return the response from the API
   return response.json();
 };
