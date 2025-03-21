@@ -108,3 +108,60 @@ export const forgotPassword = async (email: string) => {
 
   return response.json();
 };
+
+export const resetPassword = async (token: string, newPassword: string) => {
+  if (!token) {
+    throw new Error("Token is required");
+  }
+
+  if (!newPassword) {
+    throw new Error("New password is required");
+  } else if (newPassword.length < 8) {
+    throw new Error("Password must be at least 8 characters");
+  }
+
+  const response = await fetch(`${BASEURL}/auth/reset-password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ token, newPassword }),
+  });
+
+  if (response.status === 400) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+
+  return response.json();
+};
+
+export const changePassword = async (
+  oldPassword: string,
+  newPassword: string
+) => {
+  if (!oldPassword) {
+    throw new Error("Old password is required");
+  }
+
+  if (!newPassword) {
+    throw new Error("New password is required");
+  } else if (newPassword.length < 8) {
+    throw new Error("Password must be at least 8 characters");
+  }
+
+  const response = await fetch(`${BASEURL}/auth/change-password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ oldPassword, newPassword }),
+  });
+
+  if (response.status === 400) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+
+  return response.json();
+};
